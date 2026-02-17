@@ -1,0 +1,83 @@
+openapi: 3.0.0
+info:
+  title: DataBot Crypto API
+  version: 2.0.0
+  description: Machine-to-machine crypto data API. Real-time prices for 20+ cryptocurrencies, AI-powered trading signals, 24h predictions, and sentiment analysis. Bitcoin payments for premium endpoints.
+  contact:
+    url: https://databot-bz2x.onrender.com
+  x-apisguru-categories:
+    - financial
+    - cryptocurrency
+  x-logo:
+    url: https://em-content.zobj.net/source/twitter/408/robot_1f916.png
+  x-origin:
+    - format: openapi
+      url: https://databot-bz2x.onrender.com/openapi.json
+      version: '3.0'
+  x-providerName: databot-bz2x.onrender.com
+servers:
+  - url: https://databot-bz2x.onrender.com
+    description: Production server
+externalDocs:
+  description: Full API documentation
+  url: https://databot-bz2x.onrender.com/
+paths:
+  /price:
+    get:
+      summary: Get real-time cryptocurrency prices
+      description: Returns current prices for 20+ cryptocurrencies in USD and EUR with 24h change. Free endpoint, no authentication required.
+      operationId: getPrice
+      responses:
+        '200':
+          description: Successful response with price data
+      tags:
+        - Free
+  /signal:
+    get:
+      summary: Get AI trading signals
+      description: Returns AI-generated trading signals (BUY/SELL/HOLD) with confidence scores. Requires API key.
+      operationId: getSignal
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Trading signal with confidence
+        '401':
+          description: API key required
+      tags:
+        - Premium
+  /prediction:
+    get:
+      summary: Get 24h price predictions
+      description: Returns AI-powered 24-hour price predictions with confidence intervals. Requires API key.
+      operationId: getPrediction
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Price prediction
+        '401':
+          description: API key required
+      tags:
+        - Premium
+  /sentiment:
+    get:
+      summary: Get market sentiment analysis
+      description: Returns AI sentiment analysis (fear/greed score). Requires API key.
+      operationId: getSentiment
+      security:
+        - ApiKeyAuth: []
+      responses:
+        '200':
+          description: Sentiment analysis
+        '401':
+          description: API key required
+      tags:
+        - Premium
+components:
+  securitySchemes:
+    ApiKeyAuth:
+      type: apiKey
+      in: header
+      name: X-API-Key
+      description: API key obtained via Bitcoin payment
